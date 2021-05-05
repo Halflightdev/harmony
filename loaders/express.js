@@ -9,6 +9,8 @@ const routes = fileNames.map((fileName) =>
   require(`../api/routes/${fileName}`)
 );
 
+app.use(express.json());
+
 //utilize all route configurations to create routes
 for (const { uri, router } of routes) {
   app.use(`${uri}`, router);

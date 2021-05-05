@@ -17,9 +17,12 @@ const userSchema = new mongoose.Schema({
   guilds: [{ type: mongoose.ObjectId, ref: "Guild" }],
 });
 
-userSchema.virtual("fullName").get(function () {
-  return this.name.first + this.name.last;
-});
+userSchema
+  .virtual("fullName")
+  .get(function () {
+    return this.name.first + this.name.last;
+  })
+  .set((v) => console.log(this));
 
 const User = mongoose.model("User", userSchema);
 

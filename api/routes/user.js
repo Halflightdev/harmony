@@ -1,5 +1,5 @@
 const express = require("express");
-
+const db = require("../../models");
 const router = express.Router();
 
 router
@@ -7,9 +7,6 @@ router
   .get((req, res) => {
     res.send("userget");
   })
-  .post((req, res) => {
-    console.log(req.body);
-    res.json(req.body);
-  });
+  .post((req, res) => {});
 
 module.exports = { uri: "/user", router };
