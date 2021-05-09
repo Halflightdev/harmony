@@ -22,7 +22,11 @@ userSchema
   .get(function () {
     return this.name.first + this.name.last;
   })
-  .set((v) => console.log(this));
+  .set(function (name) {
+    const [firstName, lastName] = name.split(" ");
+    this.name.first = firstName;
+    this.name.last = lastName;
+  });
 
 const User = mongoose.model("User", userSchema);
 

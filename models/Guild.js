@@ -1,14 +1,20 @@
 const mongoose = require("mongoose");
+const db = require("./index");
 
 const channelSchema = {
   name: {
     type: String,
     required: true,
   },
-  type: {
+  typeModel: {
     type: String,
-    enum: ["voice", "text"],
-    default: "text",
+    enum: ["TextChat"],
+    default: "TextChat",
+  },
+  type: {
+    type: mongoose.ObjectId,
+    refPath: "typeModel",
+    required: true,
   },
 };
 
@@ -26,6 +32,10 @@ const guildSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     ref: "User",
     required: true,
+    validate: {
+      validator: (userId) => db.User.exists({ _id: userId }),
+      message: "There is no user with ID {VALUE}.",
+    },
   },
   createdAt: { type: Date, default: Date.now },
   categories: [categorySchema],

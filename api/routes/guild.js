@@ -1,9 +1,8 @@
 const express = require("express");
+const handlers = require("../handlers/guild");
 
 const router = express.Router();
 
-router.route("/").get((req, res) => {
-  res.send("guildget");
-});
+router.route("/").post(handlers.createGuild);
 
 module.exports = { uri: "/guild", router };

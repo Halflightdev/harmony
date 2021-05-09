@@ -1,4 +1,7 @@
 require("./loaders/mongoose");
 require("./loaders/express");
 
-//app startup
+let sum = 0;
+sum = 2;
+
+sum = 5;
