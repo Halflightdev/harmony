@@ -16,8 +16,4 @@ for (const { uri, router } of routes) {
   app.use(`${uri}`, router);
 }
 
-app.get("/user/:id", (req, res) => {
-  return res.send("<h2>hello mr. user!</h2>");
-});
-
 app.listen(3000, () => console.log("listening on port 3000"));

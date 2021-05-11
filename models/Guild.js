@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
 const db = require("./index");
 
-const channelSchema = {
+const channelSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  typeModel: {
-    type: String,
-    enum: ["TextChat"],
-    default: "TextChat",
-  },
-  type: {
-    type: mongoose.ObjectId,
-    refPath: "typeModel",
-    required: true,
-  },
-};
+  // typeModel: {
+  //   type: String,
+  //   enum: ["TextChat"],
+  //   default: "TextChat",
+  // },
+  // type: {
+  //   type: mongoose.ObjectId,
+  //   refPath: "typeModel",
+  //   required: true,
+  // },
+});
 
 const categorySchema = {
   name: {

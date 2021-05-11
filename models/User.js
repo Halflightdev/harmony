@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
 userSchema
   .virtual("fullName")
   .get(function () {
-    return this.name.first + this.name.last;
+    return `${this.name.first} ${this.name.last}`;
   })
   .set(function (name) {
     const [firstName, lastName] = name.split(" ");

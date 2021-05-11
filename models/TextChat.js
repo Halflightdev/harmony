@@ -7,7 +7,7 @@ const textChatSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["group", "direct", "guild"],
+    enum: ["group", "direct"],
     required: true,
   },
   users: [{ type: mongoose.ObjectId, ref: "User" }],
