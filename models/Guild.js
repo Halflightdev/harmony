@@ -1,32 +1,34 @@
 const mongoose = require("mongoose");
 const db = require("./index");
 
-const channelSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  // typeModel: {
-  //   type: String,
-  //   enum: ["TextChat"],
-  //   default: "TextChat",
-  // },
-  // type: {
-  //   type: mongoose.ObjectId,
-  //   refPath: "typeModel",
-  //   required: true,
-  // },
-});
+const { Schema } = mongoose;
 
-const categorySchema = {
+const channelSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
+  { discriminator: "type" }
+);
+
+const categorySchema = new Schema({
   name: {
     type: String,
     required: true,
   },
   channels: [channelSchema],
-};
+});
 
-const guildSchema = new mongoose.Schema({
+// Defining discriminators for channel
+const channelsPath = categorySchema.path("channels");
+
+channelsPath.discriminator("TextChannel", new Schema({ lastMessage: String }));
+
+channelsPath.discriminator("VoiceChannel", new Schema({ server: String }));
+
+const guildSchema = new Schema({
   name: { type: String, required: true },
   createdBy: {
     type: mongoose.ObjectId,
@@ -39,7 +41,6 @@ const guildSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: Date.now },
   categories: [categorySchema],
-  channels: [channelSchema],
 });
 
 const Guild = mongoose.model("Guild", guildSchema);
