@@ -43,6 +43,11 @@ const guildSchema = new Schema({
   categories: [categorySchema],
 });
 
+guildSchema.pre("remove", async function (next) {
+  await db.GuildMember.deleteMany({ guild: this._id });
+  next();
+});
+
 const Guild = mongoose.model("Guild", guildSchema);
 
 exports.Guild = Guild;

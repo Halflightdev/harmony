@@ -13,6 +13,7 @@ const createGuild = withTransaction(async (session, req, res) => {
   await new db.GuildMember({
     guild: guild._id,
     name: populatedGuild.createdBy.fullName,
+    user: populatedGuild.createdBy,
   }).save({
     session,
   });
@@ -22,6 +23,11 @@ const createGuild = withTransaction(async (session, req, res) => {
 
 const getGuild = asyncMiddleware(async (req, res) => {
   res.json(req.guild);
+});
+
+const deleteGuild = asyncMiddleware(async (req, res) => {
+  await req.guild.remove();
+  res.status(204).end();
 });
 
 const createCategory = asyncMiddleware(async (req, res) => {
@@ -41,14 +47,23 @@ const createCategory = asyncMiddleware(async (req, res) => {
 });
 
 const getCategory = asyncMiddleware(async (req, res) => {
-  const { guild } = req;
+  res.json(req.category);
+});
 
-  const category = guild.categories.id(req.params.categoryId);
+const deleteCategory = asyncMiddleware(async (req, res) => {
+  const { guild, category } = req;
 
-  res.json(category);
+  guild.categories.pull(category._id);
+
+  await guild.save();
+
+  res.status(204).end();
 });
 
 exports.createGuild = createGuild;
 exports.getGuild = getGuild;
+exports.deleteGuild = deleteGuild;
 exports.createCategory = createCategory;
 exports.getCategory = getCategory;
+exports.deleteCategory = deleteCategory;
+exports.createChannel = createChannel;

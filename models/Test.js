@@ -8,7 +8,6 @@ const Test = mongoose.model(
         a: String,
         b: String,
       }),
-      required: true,
     },
   })
 );
