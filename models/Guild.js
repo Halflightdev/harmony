@@ -10,7 +10,7 @@ const channelSchema = new Schema(
       required: true,
     },
   },
-  { discriminator: "type" }
+  { discriminatorKey: "__t" }
 );
 
 const categorySchema = new Schema({

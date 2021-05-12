@@ -6,4 +6,4 @@ const router = express.Router();
 
 router.route("/").post(handlers.createUser);
 
-module.exports = { uri: "/user", router };
+module.exports = { uri: "/users", router };

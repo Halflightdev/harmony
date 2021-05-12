@@ -4,6 +4,7 @@ const {
   DATABASE_PASSWORD,
   DATABASE_HOST,
 } = require("../config");
+const db = require("../models");
 
 mongoose
   .connect(
@@ -16,3 +17,7 @@ mongoose.connection.once("open", () => {
   mongoose.connection.on("error", console.error);
   console.log("connected to database.");
 });
+
+// for (let i = 0; i < 10000; i++) {
+//   new db.Test({ "obj.a": "hello!" }).save();
+// }

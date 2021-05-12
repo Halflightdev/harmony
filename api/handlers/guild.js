@@ -1,5 +1,5 @@
 const db = require("../../models");
-const { withTransaction, asyncMiddleware } = require("../../middlewares/utils");
+const { withTransaction, asyncMiddleware } = require("../../helpers/mongoose");
 
 const createGuild = withTransaction(async (session, req, res) => {
   const { name, createdBy, categories } = req.body;
@@ -17,17 +17,38 @@ const createGuild = withTransaction(async (session, req, res) => {
     session,
   });
 
-  return res.set({ Location: "abc" }).status(201).json(guild);
+  return res.set({ Location: "TODO" }).status(201).json(guild);
 });
 
 const getGuild = asyncMiddleware(async (req, res) => {
-  const guild = await db.Guild.findById(req.params.guildId).lean().exec();
-  if (!guild) {
-    res.status(404).send("Guild does not exist.");
-  }
+  res.json(req.guild);
+});
 
-  res.json(guild);
+const createCategory = asyncMiddleware(async (req, res) => {
+  const {
+    guild,
+    body: { name, channels },
+  } = req;
+
+  const categoriesCount = guild.categories.push({ name, channels });
+
+  await guild.save();
+
+  res
+    .set({ Location: "TODO" })
+    .status(201)
+    .json(guild.categories[categoriesCount - 1]);
+});
+
+const getCategory = asyncMiddleware(async (req, res) => {
+  const { guild } = req;
+
+  const category = guild.categories.id(req.params.categoryId);
+
+  res.json(category);
 });
 
 exports.createGuild = createGuild;
 exports.getGuild = getGuild;
+exports.createCategory = createCategory;
+exports.getCategory = getCategory;

@@ -1,4 +1,4 @@
-const { asyncMiddleware } = require("../../middlewares/utils");
+const { asyncMiddleware } = require("../../helpers/mongoose");
 const db = require("../../models");
 
 const createUser = asyncMiddleware(async (req, res) => {

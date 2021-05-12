@@ -8,7 +8,9 @@ const guildMemberSchema = new mongoose.Schema({
   guild: {
     type: mongoose.ObjectId,
     required: true,
+    ref: "Guild",
   },
+  user: { type: mongoose.ObjectId, required: true, ref: "User" },
 });
 
 const GuildMember = new mongoose.model("GuildMember", guildMemberSchema);
